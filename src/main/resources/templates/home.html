@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>中国国际智能产业博览会</title>
     <link rel="stylesheet" href="layui/css/layui.css">
-    <script src="layui/layui.js"></script>
-    <script src="bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
     <script src="jquery.min.js"></script>
-
+    <script src="layui/layui.js"></script>
+    <script src="bootstrap.js"></script>
+    <script src="bootbox.min.js"></script>
 
     <style type="text/css">
         * {
@@ -53,7 +54,7 @@
 
         @font-face {
             font-family: "shijian";
-            src: url('Digital-7Mono.TTF');
+            src: url('./Digital-7Mono.TTF');
         }
 
         .ind_juli {
@@ -98,6 +99,35 @@
             margin: 0 15px;
         }
 
+        .openToSet .modal-dialog {
+            height: 600px;
+        }
+
+        .openToSet .modal-header {
+            background-color: #5bc0de;
+        }
+
+        .openToSet form {
+            font-size: 40px;
+        }
+
+        .openToSet .setdiv {
+            height: 40px;
+        }
+
+        .openToSet .modal-content {
+            margin-top: 280px;
+        }
+
+        .openToSet label {
+            padding-left: 112px
+        }
+
+        .openToSet input {
+            height: 70px;
+            width: 275px;
+        }
+
         /*@-webkit-keyframes spinning {
          20%{
              transform: scale(1.2);
@@ -112,9 +142,9 @@
 
 <body style="background: url(bj.jpg) no-repeat center center;background-size: contain">
 <div>
-    <button id="set-parames"><i></i>设置参数</button>
-    <button id="full-screen">全屏显示</button>
-    <div >
+    <div id="content">
+        <button id="set-parames" onclick="homeMethod.setTime()">设置参数</button>
+        <button id="full-screen" onclick="homeMethod.fullScreen()">全屏显示</button>
         <div class="ind_box" id="index-box">
             <div class="ind_juli">
                 距离<span id="mnian">2018</span>年<span id="myue">08</span>月<span id="mri">23</span>日开幕
@@ -125,95 +155,12 @@
             <div class="ind_juli" style="font-size: 65px;">
                 今天<span id="nian"></span>年<span id="yue"></span>月<span id="ri"></span>日
             </div>
+
         </div>
     </div>
 </div>
 
 </body>
 
-<script type="text/javascript">
-    function getQueryString(name) {//获取参数
-        var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
-        if (result == null || result.length < 1) {
-            return "";
-        }
-        return result[1];
-    }
-
-    function fn_date_y_m_d(date) {//格式化日期YYYY-MM-DD
-        date = new Date(date);
-        var month = date.getMonth() + 1;
-        var days = date.getDate();
-        return date.getFullYear()
-            + "-" + fix(month, 2)
-            + "-" + fix(days, 2);
-    }
-
-    //求二个日期之间的时间差天数
-    function fn_day_time(time1, time2, num) {
-        time1 = Date.parse(new Date(time1));
-        time2 = Date.parse(new Date(time2));
-        return time3 = Math.abs(parseInt((time2 - time1) / 1000 / 3600 / 24) + 1).toFixed(num);
-    }
-
-    function fix(num, length) {
-        return ('' + num).length < length ? ((new Array(length + 1)).join('0') + num).slice(-length) : '' + num;
-    }
-</script>
-
-<script type="text/javascript">
-    function time_10() {
-        var myDate = new Date();
-
-        myDate.getFullYear(); //年
-        myDate.getMonth() + 1; //月
-        myDate.getDate(); //日
-
-        document.getElementById("nian").innerHTML = myDate.getFullYear();
-        document.getElementById("yue").innerHTML = myDate.getMonth() + 1;
-        document.getElementById("ri").innerHTML = myDate.getDate();
-
-        var mudate = getQueryString("date");
-        if (mudate == undefined || mudate == "") {
-            mudate = "2018-08-23";
-        }
-
-        var mudated = new Date(mudate);
-        var redate = fn_day_time(myDate, mudated, 0);
-
-        document.getElementById("mnian").innerHTML = mudated.getFullYear();
-        document.getElementById("myue").innerHTML = mudated.getMonth() + 1;
-        document.getElementById("mri").innerHTML = mudated.getDate();
-        document.getElementById("dao").innerHTML = redate;
-    };
-    time_10();
-    window.setInterval(function () {
-        time_10();
-    }, 10000)
-</script>
-<script type="text/javascript">
-    document.getElementById("full-screen").onclick = function () {
-        var elem = document.getElementById("index-box");
-        var h1 = document.getElementById("h1");
-        requestFullScreen(elem);// 某个页面元素
-        //requestFullScreen(document.documentElement);// 整个网页
-    };
-
-    function requestFullScreen(element) {
-        // 判断各种浏览器，找到正确的方法
-        var requestMethod = element.requestFullScreen || //W3C
-            element.webkitRequestFullScreen ||    //Chrome等
-            element.mozRequestFullScreen || //FireFox
-            element.msRequestFullScreen; //IE11
-        if (requestMethod) {
-            requestMethod.call(element);
-        }
-        else if (typeof window.ActiveXObject !== "undefined") {//for Internet Explorer
-            var wscript = new ActiveXObject("WScript.Shell");
-            if (wscript !== null) {
-                wscript.SendKeys("{F11}");
-            }
-        }
-</script>
-<script type="text/javascript" src="../static/home.js"></script>
+<script type="text/javascript" src="home.js"></script>
 </html>

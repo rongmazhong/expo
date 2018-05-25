@@ -1,12 +1,110 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-family: "微软雅黑";
+    }
+
+    .cle {
+        clear: both;
+    }
+
+    .cleb:after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+    .lf {
+        float: left;
+    }
+
+    .rt {
+        float: right;
+    }
+
+    .dis {
+        display: none;
+    }
+
+    body {
+        width: 1080px;
+        height: 1920px;
+        margin: 0 auto;
+    }
+
+    .ind_box {
+        padding-top: 670px;
+        text-align: center;
+        font-size: 80px;
+    }
+
+    @font-face {
+        font-family: "shijian";
+        src: url('./Digital-7Mono.TTF');
+    }
+
+    .ind_juli {
+        color: #14b6de;
+        font-size: 57px;
+        height: 70px;
+        line-height: 70px;
+        margin-bottom: 90px;
+    }
+
+    .ind_juli span {
+        background: #000;
+        font-family: "shijian";
+        padding: 0 5px;
+        height: 70px;
+        line-height: 70px;
+        color: #e60012;
+        margin: 0 15px;
+    }
+
+    .rong-btn {
+        border-style: solid;
+        border-color: blue;
+        font-size: 20px;
+    }
+
+    .ind_julis {
+        color: #14b6de;
+        font-size: 98px;
+        height: 100px;
+        line-height: 100px;
+        margin-bottom: 90px;
+    }
+
+    .ind_julis span {
+        background: #000;
+        font-family: "shijian";
+        padding: 0 5px;
+        height: 70px;
+        line-height: 70px;
+        color: #e60012;
+        margin: 0 15px;
+    }
+
+    /*@-webkit-keyframes spinning {
+     20%{
+         transform: scale(1.2);
+     }
+     90%{
+         -moz-transform: scale(1.1 );
+     }
+    }
+    #dao{transform:rotate(360deg);animation: spinning 2s infinite linear;display: inline-block;padding: 5px 15px;}*/
+</style>
 <body>
-<div style="margin:0 auto;height:600px;width:700px;">
-    <button id="btn">js控制页面的全屏展示和退出全屏显示</button>
-    <div id="content" style="margin:0 auto;height:500px;width:700px; background:#900;" >
-        <!--<h1 id="h1">js控制页面的全屏展示和退出全屏显示</h1>-->
-        <div style="background: url(bj.jpg) no-repeat center center;background-size: contain">
+<div style="margin:0 auto;height:1920px;width:1080px;">
+    <button id="btn">全屏展示</button>
+    <div id="content" style="margin:0 auto;height:1920px;width:1080px;background: url("bj.jpg") no-repeat center center;background-size: contain " >
+        <div>
             <div class="ind_box" id="index-box">
                 <div class="ind_juli">
                     距离<span id="mnian">2018</span>年<span id="myue">08</span>月<span id="mri">23</span>日开幕
@@ -20,17 +118,16 @@
             </div>
 
         </div>
-        <button id="btn2 " onclick="exitFull()">js控制页面的退出全屏显示</button>
+        <button id="btn2 " onclick="exitFull()">退出全屏</button>
     </div>
 </div>
+
 </body>
 <script language="JavaScript">
 
     document.getElementById("btn").onclick=function(){
         var elem = document.getElementById("content");
-        var h1 = document.getElementById("h1");
         requestFullScreen(elem);// 某个页面元素
-        //requestFullScreen(document.documentElement);// 整个网页
     };
 
     function requestFullScreen(element) {
@@ -67,28 +164,5 @@
             }
         }
     }
-
-</script>
-<script type="text/javascript" th:inline="javascript">
-    /*<![CDATA[*/
-
-    var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
-    var data = 2018.8.1;
-    $(document).ready(function () {
-        $.ajax({
-            type: 'post',
-            dataType: 'text',
-            url: basePath + '/setTime',
-            data: data,
-            cache: false,
-            async: true,
-            success: function (data) {
-                window.alert("修改成功");
-                window.reload();
-            }
-        });
-    });
-
-    /*]]>*/
 </script>
 </html>

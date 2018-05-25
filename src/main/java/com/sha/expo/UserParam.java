@@ -1,5 +1,7 @@
 package com.sha.expo;
 
+import org.springframework.util.StringUtils;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -14,22 +16,25 @@ public class UserParam {
 
 	// 获取properties文件属性值
 	public static String readPropertiesFile(){
-		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String WORLDEXPOTIME = df.format(new Date());
 		try {
 			Properties props = new Properties();
-			// File file = new File(System.getProperty("user.dir") + "\\time.properties");
 			InputStream in = new BufferedInputStream(new FileInputStream(System.getProperty("user.dir") + "\\time.properties"));
 			props.load(in);
 			String date = (String) props.get("WORLDEXPOTIME");
-            WORLDEXPOTIME = date;
-			// System.out.println(date);
+			if (StringUtils.isEmpty(date)){
+			    date = WORLDEXPOTIME;
+            }
+            in.close();
 			return date;
 		} catch (Exception e) {
 			e.printStackTrace();
 			//设置日期格式
 			return WORLDEXPOTIME;
-		}
+		}finally {
+
+        }
 	}
 
 	/**
@@ -50,6 +55,7 @@ public class UserParam {
             FileOutputStream fos = new FileOutputStream(file);
             properties.store(new OutputStreamWriter(fos), "update");
             fos.close();
+            fis.close();
             return OK;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -57,8 +63,6 @@ public class UserParam {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            fis.close();
         }
 		return ERROR;
 	}
