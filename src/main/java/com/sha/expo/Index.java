@@ -2,6 +2,8 @@ package com.sha.expo;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,22 +32,21 @@ public class Index {
 	@ResponseBody
 	public String getTime() {
 		String date = null;
-		try {
-			date = UserParam.readPropertiesFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		date = UserParam.readPropertiesFile();
 		return date;
 	}
-	@RequestMapping("/setTime")
+	@RequestMapping(value = "/setTime",method = RequestMethod.POST)
 	@ResponseBody
-	public String setTime(String time){
+	public String setTime(@RequestParam String time){
 		try {
-			UserParam.writePropertiesFile(time);
+			String r =  UserParam.writePropertiesFile(time);
+			if (r.equalsIgnoreCase("ok")){
+				return "ok";
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "ok";
+		return "error";
 	}
 	@RequestMapping("/test")
 	public ModelAndView test(){

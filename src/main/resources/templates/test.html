@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <body>
 <div style="margin:0 auto;height:600px;width:700px;">
@@ -68,5 +68,27 @@
         }
     }
 
+</script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+    var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
+    var data = 2018.8.1;
+    $(document).ready(function () {
+        $.ajax({
+            type: 'post',
+            dataType: 'text',
+            url: basePath + '/setTime',
+            data: data,
+            cache: false,
+            async: true,
+            success: function (data) {
+                window.alert("修改成功");
+                window.reload();
+            }
+        });
+    });
+
+    /*]]>*/
 </script>
 </html>

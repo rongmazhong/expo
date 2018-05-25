@@ -13,16 +13,17 @@ import java.util.*;
 public class UserParam {
 
 	// 获取properties文件属性值
-	public static String readPropertiesFile() throws FileNotFoundException, IOException {
+	public static String readPropertiesFile(){
 		SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
 		String WORLDEXPOTIME = df.format(new Date());
 		try {
 			Properties props = new Properties();
-			InputStream in = new BufferedInputStream(new FileInputStream("D:\\expo\\src\\main\\resources\\time.properties"));
+			// File file = new File(System.getProperty("user.dir") + "\\time.properties");
+			InputStream in = new BufferedInputStream(new FileInputStream(System.getProperty("user.dir") + "\\time.properties"));
 			props.load(in);
 			String date = (String) props.get("WORLDEXPOTIME");
-			System.out.println(date);
-
+            WORLDEXPOTIME = date;
+			// System.out.println(date);
 			return date;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -36,15 +37,29 @@ public class UserParam {
 	 *
 	 * @param value 键值
 	 */
-	public static void writePropertiesFile(String value) throws IOException {
+	public static String writePropertiesFile(String value) throws IOException {
+	    final String OK = "ok";
+	    final String ERROR = "error";
 		Properties properties = new Properties();
-		File file = new File("D:\\expo\\src\\main\\resources\\time.properties");
-		FileInputStream fis = new FileInputStream(file);
-		properties.load(new InputStreamReader(new FileInputStream(file), "UTF-8"));
-		properties.setProperty("WORLDEXPOTIME",value);
-		FileOutputStream fos = new FileOutputStream(file);
-		properties.store(new OutputStreamWriter(fos), "update");
-		fos.close();
-		fis.close();
+		File file = new File(System.getProperty("user.dir") + "\\time.properties");
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+            properties.load(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+            properties.setProperty("WORLDEXPOTIME",value);
+            FileOutputStream fos = new FileOutputStream(file);
+            properties.store(new OutputStreamWriter(fos), "update");
+            fos.close();
+            return OK;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            fis.close();
+        }
+		return ERROR;
 	}
 }
