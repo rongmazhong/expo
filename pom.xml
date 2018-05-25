@@ -5,12 +5,18 @@
 
     <groupId>com.sha</groupId>
     <artifactId>expo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>expo</name>
     <description>World Expo project</description>
-
+    <developers>
+        <developer>
+            <id>rong</id>
+            <name>rong</name>
+            <email>rongmazhong@outlook.com</email>
+        </developer>
+    </developers>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
