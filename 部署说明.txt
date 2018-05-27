@@ -13,3 +13,7 @@
   4.1 操着系统为win10，则将快捷方式复制到 C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
   4.2 操着系统为win7，请参照 https://jingyan.baidu.com/article/86112f1377f52327379787c6.html
 
+
+firefox 版本60.0.1
+设置主页为127.0.0.1
+插件AutoFullscreen 1.0.0.1
