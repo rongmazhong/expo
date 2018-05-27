@@ -12,3 +12,4 @@
 4. 选中start.bat右键单击，创建快捷方式。
   4.1 操着系统为win10，则将快捷方式复制到 C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
   4.2 操着系统为win7，请参照 https://jingyan.baidu.com/article/86112f1377f52327379787c6.html
+

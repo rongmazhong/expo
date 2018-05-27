@@ -4,7 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>中国国际智能产业博览会</title>
     <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/home.css">
     <script src="jquery.min.js"></script>
     <script src="layui/layui.js"></script>
     <script src="bootstrap.js"></script>
@@ -143,13 +145,14 @@
 <body style="background: url(bj.jpg) no-repeat center center;background-size: contain">
 <div>
     <div id="content">
-        <button id="set-parames" onclick="homeMethod.setTime()">设置参数</button>
-        <button id="full-screen" onclick="homeMethod.fullScreen()">全屏显示</button>
+        <button id="set-parames" onclick="homeMethod.setTime()" style="background: none; font-size: 10px; color: grey;border: none; margin-top: 30px; margin-left: 15px ">设置</button>
+        <a style="margin-left: 20px" href="javascript:homeMethod.cloneScreen()">关闭</a>
+        <!--<button id="full-screen" onclick="homeMethod.fullScreen()" style="background: none; font-size: 24px;border: none; margin-top: 30px; margin-left: 15px ">退出</button>-->
         <div class="ind_box" id="index-box">
             <div class="ind_juli">
                 距离<span id="mnian">2018</span>年<span id="myue">08</span>月<span id="mri">23</span>日开幕
             </div>
-            <div class="ind_julis">
+            <div class="ind_julis animated infinite pulse">
                 倒计时<span id="dao"></span>天
             </div>
             <div class="ind_juli" style="font-size: 65px;">

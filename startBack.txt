@@ -1,0 +1,11 @@
+@echo off
+ping 127.0.0.1 -n 2 >nul
+start java -jar D:\expo\expo-1.0.jar
+ping 127.0.0.1 -n 10 >nul
+start  "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe --kiosk" http://localhost:80/
+ping 127.0.0.1 -n 4 >nul
+choice /t 1 /d y /n > nul
+echo %cd%
+start D:\expo\f11.vbs
+:exit
+exit

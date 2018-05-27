@@ -23,21 +23,23 @@ var homeMethod = {
             url: '/getTime',
             contentType: JSON,
             success: function (result, status, xhr) {
-                window.console.log(result);
+                console.log(result);
                 var mydate = result.toString().split("-");
                 $('#mnian').html(mydate[0]);
                 $('#myue').html(mydate[1]);
                 $('#mri').html(mydate[2]);
                 // 设置差时
-                var curtainTime = Date.parse(new Date(result)) - 28800000;
-                var nowTime = Date.parse(year + '-' + month + '-' + today);
+                var curtainTime = ((Date.parse(new Date(result)))/1000/3600/24 + 1).toFixed(0);
+                // var nowTime = Date.parse(year + '-' + month + '-' + today);
+                var nowTime = ((Date.parse(new Date()))/1000/3600/24 + 1).toFixed(0);
                 if (curtainTime == nowTime) {
                     $('#dao').html('0');
                     return;
                 } else {
-                    var curtainTime = Date.parse(new Date(mydate));
-                    var nowTime = Date.parse(new Date());
-                    var getDate = Math.abs(parseInt((curtainTime - nowTime) / 1000 / 3600 / 24) + 1).toFixed(0);
+                    // var curtainTime = Date.parse(new Date(mydate));
+                    // var nowTime = Date.parse(new Date());
+                    // var getDate = Math.abs(parseInt((curtainTime - nowTime) / 1000 / 3600 / 24) + 1).toFixed(0);
+                    var getDate = curtainTime-nowTime;
                     $('#dao').html(getDate);
                 }
             },
@@ -50,20 +52,30 @@ var homeMethod = {
             }
         });
     },
-
+    cloneScreen: function(){
+        var browserName=navigator.appName;
+        alert(browserName);
+        if (browserName=="Netscape") {
+            window.open('','_self','');
+            window.close();
+        } else {
+            window.close();
+        }
+    },
     //全屏
     fullScreen: function () {
-        // $('#set-parames').hidden;
-        // $('#full-screen').hidden;
-        var elem = document.getElementById("content");
-        homeMethod.requestFullScreen(elem);
+        // var elem = document.getElementById("content");
+        var elem = $(document.body);
+        homeMethod.requestMyFullScreen(elem);
     },
-    requestFullScreen: function (element) {
+    requestMyFullScreen: function (element) {
         // 判断各种浏览器，找到正确的方法
-        var requestMethod = element.requestFullScreen || //W3C
-            element.webkitRequestFullScreen ||    //Chrome等
+        var requestMethod = element.fullscreenEnabled  || //W3C
+            element.webkitIsFullScreen  ||    //Chrome等
             element.mozRequestFullScreen || //FireFox
-            element.msRequestFullScreen; //IE11
+            element.msFullscreenEnabled ||
+        window.fullScreen(); //IE11
+
         if (requestMethod) {
             requestMethod.call(element);
         }
@@ -74,7 +86,18 @@ var homeMethod = {
             }
         }
     },
+//时间判断
+    booleanTime: function (result) {
+        var endTime = Date.parse(new Date(result));
+        var nowTime = Date.parse(new Date());
+        if ((parseInt((endTime - nowTime) / 1000 / 3600 / 24)) < 0) {
+            return false;
+        } else {
+            return true;
+        }
+    },
 
+    //设置时间
     setTime: function () {
         var date = $('#mnian').html() + '-' + $('#myue').html() + '-' + $('#mri').html();
         var html = homeMethod.openHtml(date);
@@ -92,10 +115,13 @@ var homeMethod = {
             },
             callback: function (result) {
                 if (result) {
+                    //todo 时间校验
+                    var getMyTime = $('#expo-date').val();
+                    var backCheck = homeMethod.booleanTime(getMyTime);
                     var Mytime = {
-                        "callTime": $('#expo-date').val()
-                    }
-                    if (Mytime) {
+                        "callTime": getMyTime
+                    };
+                    if (backCheck) {
                         $.ajax({
                             type: "POST",
                             async: true,
@@ -111,7 +137,8 @@ var homeMethod = {
                             }
                         });
                     } else {
-                        return Mytime;
+                        // alert("时间设置有误，请重新设置!");
+                        return backCheck;
                     }
                 }
             }
@@ -121,9 +148,7 @@ var homeMethod = {
             elem: '#expo-date',
             min: new Date().toString()
         });
-    }
-
-    ,
+    },
 //弹窗页面
     openHtml: function (date) {
         if (!date) {
@@ -133,5 +158,6 @@ var homeMethod = {
         html += '<dd><label><input type="text" value="' + date + '" id="expo-date" class="my-input layui-input" lay-key="1"></label>';
         html += '</dd></dl></div></form>';
         return html;
-    }
+    },
+
 };

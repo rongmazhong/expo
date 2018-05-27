@@ -31,6 +31,13 @@ public class Index {
 		date = UserParam.readPropertiesFile();
 		return date;
 	}
+	/**
+	 * 时间设置
+	 * @param time 时间
+	 * @return string
+	 * @author rongmazhong@outlook.com
+	 * @date 5.26/026 上午 11:31
+	 */
 	@RequestMapping(value = "/setTime",method = RequestMethod.POST)
 	@ResponseBody
 	public String setTime(@RequestBody Mytime time){
@@ -45,6 +52,12 @@ public class Index {
 		}
 		return "error";
 	}
+	/**
+	 * 测试
+	 * @return test.html
+	 * @author rongmazhong@outlook.com
+	 * @date 5.26/026 上午 11:31
+	 */
 	@RequestMapping("/test")
 	public ModelAndView test(){
 		return new ModelAndView("test");
