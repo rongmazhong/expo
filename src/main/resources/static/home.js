@@ -1,7 +1,7 @@
 //初始化
 $(document).ready(function () {
     homeMethod.init();
-    // homeMethod.setTime();
+    homeMethod.setNowTime();
 });
 
 var homeMethod = {
@@ -30,15 +30,11 @@ var homeMethod = {
                 $('#mri').html(mydate[2]);
                 // 设置差时
                 var curtainTime = ((Date.parse(new Date(result)))/1000/3600/24 + 1).toFixed(0);
-                // var nowTime = Date.parse(year + '-' + month + '-' + today);
                 var nowTime = ((Date.parse(new Date()))/1000/3600/24 + 1).toFixed(0);
                 if (curtainTime == nowTime) {
                     $('#dao').html('0');
                     return;
                 } else {
-                    // var curtainTime = Date.parse(new Date(mydate));
-                    // var nowTime = Date.parse(new Date());
-                    // var getDate = Math.abs(parseInt((curtainTime - nowTime) / 1000 / 3600 / 24) + 1).toFixed(0);
                     var getDate = curtainTime-nowTime;
                     $('#dao').html(getDate);
                 }
@@ -51,6 +47,21 @@ var homeMethod = {
                 window.console.log("获取时间失败，请检查。")
             }
         });
+    },
+    // 设置当前时间
+    getNowTime: function(){
+        var nowDate = new Date;
+        console.log(nowDate);
+        var year = nowDate.getFullYear();//获取当前年
+        $('#nian').html(year);
+        var month = nowDate.getMonth() + 1;//获取当前月
+        $('#yue').html(month);
+        var today = nowDate.getDate();//获取当前日
+        $('#ri').html(today);
+    },
+    // 定时循环
+    setNowTime:function(){
+      setInterval("homeMethod.getNowTime()",1000*60*60)
     },
     cloneScreen: function(){
         var browserName=navigator.appName;
