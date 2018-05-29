@@ -51,7 +51,7 @@ var homeMethod = {
     // 设置当前时间
     getNowTime: function(){
         var nowDate = new Date;
-        console.log(nowDate);
+        console.log("循环一次，时间是：" + nowDate);
         var year = nowDate.getFullYear();//获取当前年
         $('#nian').html(year);
         var month = nowDate.getMonth() + 1;//获取当前月
