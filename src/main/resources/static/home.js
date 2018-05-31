@@ -1,6 +1,7 @@
 //初始化
 $(document).ready(function () {
     homeMethod.init();
+    homeMethod.getNowTime();
     homeMethod.setNowTime();
 });
 
@@ -9,7 +10,11 @@ var homeMethod = {
         layui.use('laydate', function () {
             layuiMethods = layui.laydate;
         });
+    },
+    // 设置当前时间
+    getNowTime: function(){
         var nowDate = new Date;
+        console.log("循环一次，时间是：" + nowDate);
         var year = nowDate.getFullYear();//获取当前年
         $('#nian').html(year);
         var month = nowDate.getMonth() + 1;//获取当前月
@@ -23,7 +28,7 @@ var homeMethod = {
             url: '/getTime',
             contentType: JSON,
             success: function (result, status, xhr) {
-                console.log(result);
+                // console.log(result);
                 var mydate = result.toString().split("-");
                 $('#mnian').html(mydate[0]);
                 $('#myue').html(mydate[1]);
@@ -47,17 +52,6 @@ var homeMethod = {
                 window.console.log("获取时间失败，请检查。")
             }
         });
-    },
-    // 设置当前时间
-    getNowTime: function(){
-        var nowDate = new Date;
-        console.log("循环一次，时间是：" + nowDate);
-        var year = nowDate.getFullYear();//获取当前年
-        $('#nian').html(year);
-        var month = nowDate.getMonth() + 1;//获取当前月
-        $('#yue').html(month);
-        var today = nowDate.getDate();//获取当前日
-        $('#ri').html(today);
     },
     // 定时循环
     setNowTime:function(){
@@ -171,4 +165,10 @@ var homeMethod = {
         return html;
     },
 
+    // 获取屏幕尺寸
+    getscreen: function () {
+        var w = document.documentElement.clientWidth || document.body.clientWidth;
+        var h = document.documentElement.clientHeight || document.body.clientHeight;
+        console.log(w , h);
+    }
 };
